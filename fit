@@ -1,0 +1,192 @@
+// Source code is decompiled from a .class file using FernFlower decompiler.
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class firstfit {
+   public firstfit() {
+   }
+
+   static void firstFit(int[] var0, int var1, int[] var2, int var3) {
+      int[] var4 = new int[var3];
+
+      int var5;
+      for(var5 = 0; var5 < var4.length; ++var5) {
+         var4[var5] = -1;
+      }
+
+      for(var5 = 0; var5 < var3; ++var5) {
+         for(int var6 = 0; var6 < var1; ++var6) {
+            if (var0[var6] >= var2[var5]) {
+               var4[var5] = var6;
+               var0[var6] -= var2[var5];
+               break;
+            }
+         }
+      }
+
+      System.out.println("\nProcess No.\tProcess Size\tBlock no.");
+
+      for(var5 = 0; var5 < var3; ++var5) {
+         System.out.print(" " + (var5 + 1) + "\t\t" + var2[var5] + "\t\t");
+         if (var4[var5] != -1) {
+            System.out.print(var4[var5] + 1);
+         } else {
+            System.out.print("Not Allocated");
+         }
+
+         System.out.println();
+      }
+
+   }
+
+   static void bestFit(int[] var0, int var1, int[] var2, int var3) {
+      int[] var4 = new int[var3];
+
+      int var5;
+      for(var5 = 0; var5 < var4.length; ++var5) {
+         var4[var5] = -1;
+      }
+
+      for(var5 = 0; var5 < var3; ++var5) {
+         int var6 = -1;
+
+         for(int var7 = 0; var7 < var1; ++var7) {
+            if (var0[var7] >= var2[var5]) {
+               if (var6 == -1) {
+                  var6 = var7;
+               } else if (var0[var6] > var0[var7]) {
+                  var6 = var7;
+               }
+            }
+         }
+
+         if (var6 != -1) {
+            var4[var5] = var6;
+            var0[var6] -= var2[var5];
+         }
+      }
+
+      System.out.println("\nProcess No.\tProcess Size\tBlock no.");
+
+      for(var5 = 0; var5 < var3; ++var5) {
+         System.out.print(" " + (var5 + 1) + "\t\t" + var2[var5] + "\t\t");
+         if (var4[var5] != -1) {
+            System.out.print(var4[var5] + 1);
+         } else {
+            System.out.print("Not Allocated");
+         }
+
+         System.out.println();
+      }
+
+   }
+
+   static void worstFit(int[] var0, int var1, int[] var2, int var3) {
+      int[] var4 = new int[var3];
+
+      int var5;
+      for(var5 = 0; var5 < var4.length; ++var5) {
+         var4[var5] = -1;
+      }
+
+      for(var5 = 0; var5 < var3; ++var5) {
+         int var6 = -1;
+
+         for(int var7 = 0; var7 < var1; ++var7) {
+            if (var0[var7] >= var2[var5]) {
+               if (var6 == -1) {
+                  var6 = var7;
+               } else if (var0[var6] < var0[var7]) {
+                  var6 = var7;
+               }
+            }
+         }
+
+         if (var6 != -1) {
+            var4[var5] = var6;
+            var0[var6] -= var2[var5];
+         }
+      }
+
+      System.out.println("\nProcess No.\tProcess Size\tBlock no.");
+
+      for(var5 = 0; var5 < var3; ++var5) {
+         System.out.print("   " + (var5 + 1) + "\t\t" + var2[var5] + "\t\t");
+         if (var4[var5] != -1) {
+            System.out.print(var4[var5] + 1);
+         } else {
+            System.out.print("Not Allocated");
+         }
+
+         System.out.println();
+      }
+
+   }
+
+   static void nextFit(int[] var0, int var1, int[] var2, int var3) {
+      int[] var4 = new int[var3];
+      int var5 = 0;
+      int var6 = var1 - 1;
+      Arrays.fill(var4, -1);
+
+      int var7;
+      for(var7 = 0; var7 < var3; ++var7) {
+         while(var5 < var1) {
+            if (var0[var5] >= var2[var7]) {
+               var4[var7] = var5;
+               var0[var5] -= var2[var7];
+               var6 = (var5 - 1) % var1;
+               break;
+            }
+
+            if (var5 == var6) {
+               var6 = (var5 - 1) % var1;
+               break;
+            }
+
+            var5 = (var5 + 1) % var1;
+         }
+      }
+
+      System.out.print("\nProcess No.\tProcess Size\tBlock no.\n");
+
+      for(var7 = 0; var7 < var3; ++var7) {
+         System.out.print(var7 + 1 + "\t\t\t\t" + var2[var7] + "\t\t\t\t");
+         if (var4[var7] != -1) {
+            System.out.print(var4[var7] + 1);
+         } else {
+            System.out.print("Not Allocated");
+         }
+
+         System.out.println("");
+      }
+
+   }
+
+   public static void main(String[] var0) {
+      Scanner var1 = new Scanner(System.in);
+      System.out.print("Enter the number of memory blocks: ");
+      int var2 = var1.nextInt();
+      int[] var3 = new int[var2];
+
+      int var4;
+      for(var4 = 0; var4 < var2; ++var4) {
+         System.out.print("Enter size of memory block " + (var4 + 1) + ": ");
+         int var5 = var1.nextInt();
+         var3[var4] = var5;
+      }
+
+      System.out.print("Enter the number of processes: ");
+      var4 = var1.nextInt();
+      int[] var8 = new int[var4];
+
+      for(int var6 = 0; var6 < var4; ++var6) {
+         System.out.print("Enter size of process " + (var6 + 1) + ": ");
+         int var7 = var1.nextInt();
+         var8[var6] = var7;
+      }
+
+      var1.close();
+      firstFit(var3, var2, var8, var4);
+   }
+}
