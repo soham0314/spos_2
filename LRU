@@ -1,0 +1,52 @@
+lru
+LRUpackage MyLruPage;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class lru {
+public static void lruPageReplacement(int referenceString[],int tablesize) {
+	int faults=0;
+	int hits=0;
+	ArrayList<Integer>pages=new ArrayList<>();
+	
+	for(int page:referenceString) {
+		if(pages.contains(page)) {
+			pages.remove(Integer.valueOf(page));
+			pages.add(page);
+			hits++;
+		}
+		else {
+			if(pages.size()<tablesize) {
+				pages.add(page);
+			}
+			else {
+				pages.remove(0);
+				pages.add(page);
+			}
+		faults++;
+	}
+	}
+	System.out.println("faults:"+faults);
+	System.out.println("hits:"+hits);
+	
+}
+
+public static void main(String[] args) {
+	Scanner scanner=new Scanner(System.in);
+	System.out.println("enter number of ref string:");
+	int n=scanner.nextInt();
+	
+	int referenceString[]=new int[n];
+	
+	for(int i=0;i<n;i++) {
+		System.out.println("enter ref string");
+		referenceString[i]=scanner.nextInt();
+	}
+	System.out.println("enter tablesize:");
+	int tablesize=scanner.nextInt();
+	lruPageReplacement(referenceString,tablesize);
+}
+
+
+}
